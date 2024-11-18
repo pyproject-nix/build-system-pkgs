@@ -1,0 +1,17 @@
+{
+  "pins": {
+    "nix-github-actions": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nix-github-actions"
+      },
+      "branch": "master",
+      "revision": "e04df33f62cdcf93d73e9a04142464753a16db67",
+      "url": "https://github.com/nix-community/nix-github-actions/archive/e04df33f62cdcf93d73e9a04142464753a16db67.tar.gz",
+      "hash": "141jgrc5g0fz8fd8nd3zjy6746qi1wva9775lpfr259lqi6v7287"
+    }
+  },
+  "version": 3
+}

@@ -1,0 +1,197 @@
+[babel]
+setuptools = []
+
+[build]
+flit-core = []
+
+[calver]
+setuptools = []
+
+[cffi]
+setuptools = []
+
+[cython]
+setuptools = []
+
+[deprecation]
+setuptools = []
+
+[distro]
+setuptools = []
+
+[dunamai]
+poetry-core = []
+
+[exceptiongroup]
+flit-core = []
+flit-scm = []
+
+[hatch-fancy-pypi-readme]
+hatchling = []
+
+[hatch-jupyter-builder]
+hatchling = []
+
+[hatch-nodejs-version]
+hatchling = []
+
+[hatch-requirements-txt]
+hatchling = []
+
+[hatch-vcs]
+hatchling = []
+
+[importlib-metadata]
+setuptools = []
+setuptools-scm = []
+
+[installer]
+flit-core = []
+
+[jinja2]
+flit-core = []
+
+[jupyter-packaging]
+hatchling = []
+
+[manifestoo-core]
+hatch-vcs = []
+hatchling = []
+
+[markdown-it-py]
+flit-core = []
+
+[markupsafe]
+setuptools = []
+
+[mdurl]
+flit-core = []
+
+[meson]
+setuptools = []
+wheel = []
+
+[meson-python]
+meson = []
+ninja = []
+pyproject-metadata = []
+tomli = []
+
+[ninja]
+scikit-build = []
+setuptools = []
+setuptools-scm = []
+
+[numpy]
+cython = []
+meson-python = []
+ninja = []
+
+[oldest-supported-numpy]
+setuptools = []
+
+[packaging]
+flit-core = []
+
+[pathspec]
+flit-core = []
+
+[pbr]
+setuptools = []
+
+[pip]
+setuptools = []
+
+[pkgconfig]
+poetry-core = []
+
+[pluggy]
+setuptools = []
+setuptools-scm = []
+
+[poetry-dynamic-versioning]
+poetry-core = []
+
+[pybind11]
+setuptools = []
+wheel = []
+
+[pycparser]
+setuptools = []
+
+[pygments]
+hatchling = []
+
+[pyproject-hooks]
+flit-core = []
+
+[pyproject-metadata]
+flit-core = []
+
+[pytest-runner]
+setuptools = []
+setuptools-scm = []
+
+[rich]
+poetry-core = []
+
+[scikit-build]
+hatch-fancy-pypi-readme = []
+hatch-vcs = []
+hatchling = []
+
+[scikit-build-core]
+hatch-vcs = []
+hatchling = []
+
+[semantic-version]
+setuptools = []
+
+[setuptools-git]
+setuptools = []
+
+[setuptools-rust]
+setuptools = []
+setuptools-scm = []
+
+[setuptools-scm]
+setuptools = []
+tomli = []
+
+[toml]
+setuptools = []
+
+[tomli]
+flit-core = []
+
+[tomli-w]
+flit-core = []
+
+[tomlkit]
+poetry-core = []
+
+[tqdm]
+setuptools = []
+setuptools-scm = []
+wheel = []
+
+[trove-classifiers]
+calver = []
+setuptools = []
+
+[typing-extensions]
+flit-core = []
+
+[versioneer]
+setuptools = []
+
+[wheel]
+flit-core = []
+
+[whool]
+hatch-vcs = []
+hatchling = []
+
+[zipp]
+setuptools = []
+setuptools-scm = []
