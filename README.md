@@ -9,7 +9,7 @@ Auto-updates on a weekly basis. Automated testing of the package set is done for
 
 ## Migration
 
-Add the overlay [to your project](https://github.com/pyproject-nix/uv2nix/pull/63/commits/f2f4d5661658de3efecf99f4249c8d2c308b6aff).
+Add the overlay [to your project](https://github.com/pyproject-nix/uv2nix/pull/63/commits/3849c8c2e380c5fe110a8e79b4790245b576ebe9).
 
 ## Binary cache
 
