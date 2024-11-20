@@ -30,7 +30,6 @@ let
     final: prev:
     let
       pkgs = final.callPackage ({ pkgs }: pkgs) { };
-      inherit (pkgs) stdenv;
     in
     {
       hatchling = prev.hatchling.overrideAttrs (old: {
@@ -60,10 +59,8 @@ let
       });
 
       # Use stub from nixpkgs
-      cmake =
-        let
-          python3Packages = pkgs.python3Packages;
-        in
+      cmake = final.callPackage (
+        { stdenv, python3Packages }:
         stdenv.mkDerivation {
           inherit (python3Packages.cmake)
             pname
@@ -81,13 +78,12 @@ let
             ++ final.resolveBuildSystem {
               flit-core = [ ];
             };
-        };
+        }
+      ) { };
 
       # Use stub from nixpkgs
-      ninja =
-        let
-          python3Packages = pkgs.python3Packages;
-        in
+      ninja = final.callPackage (
+        { stdenv, python3Packages }:
         stdenv.mkDerivation {
           inherit (python3Packages.ninja)
             pname
@@ -106,35 +102,96 @@ let
             ++ final.resolveBuildSystem {
               flit-core = [ ];
             };
-        };
+        }
+      ) { };
 
       # Use maturin sources from nixpkgs because of Cargo dependencies
-      maturin = stdenv.mkDerivation {
-        inherit (pkgs.maturin)
-          pname
-          version
-          cargoDeps
-          src
-          meta
+      maturin = final.callPackage (
+        {
+          stdenv,
+          pkgs,
+        }:
+        stdenv.mkDerivation {
+          inherit (pkgs.maturin)
+            pname
+            version
+            cargoDeps
+            src
+            meta
+            ;
+
+          # Dependency metadata from uv.lock
+          inherit (prev.maturin) passthru;
+
+          nativeBuildInputs =
+            [
+              pkgs.rustPlatform.cargoSetupHook
+              final.pyprojectHook
+              pkgs.cargo
+              pkgs.rustc
+            ]
+            ++ final.resolveBuildSystem {
+              setuptools = [ ];
+              wheel = [ ];
+              tomli = [ ];
+              setuptools-rust = [ ];
+            };
+        }
+      ) { };
+
+      # Use setup hook from nixpkgs (pretends version)
+      setuptools-scm = prev.setuptools-scm.overrideAttrs (old: {
+        inherit (pkgs.python3Packages.setuptools-scm) setupHook;
+      });
+
+      # Use setup hook from nixpkgs (sets up build)
+      pkgconfig = prev.pkgconfig.overrideAttrs (old: {
+        inherit (pkgs.pkg-config)
+          setupHooks
+          wrapperName
+          suffixSalt
+          targetPrefix
+          baseBinName
           ;
+      });
 
-        # Dependency metadata from uv.lock
-        inherit (prev.maturin) passthru;
+      # Use setup hook from nixpkgs (sets up build)
+      meson-python = prev.meson-python.overrideAttrs (old: {
+        inherit (pkgs.python3Packages.meson-python) setupHooks;
+      });
 
-        nativeBuildInputs =
-          [
-            pkgs.rustPlatform.cargoSetupHook
-            final.pyprojectHook
-            pkgs.cargo
-            pkgs.rustc
-          ]
-          ++ final.resolveBuildSystem {
-            setuptools = [ ];
-            wheel = [ ];
-            tomli = [ ];
-            setuptools-rust = [ ];
-          };
-      };
+      # Use setup hook from nixpkgs (pretends version)
+      poetry-dynamic-versioning = prev.poetry-dynamic-versioning.overrideAttrs (old: {
+        inherit (pkgs.python3Packages.poetry-dynamic-versioning) setupHook;
+      });
+
+      # Use setup hook from nixpkgs (forces cython regen)
+      cython = prev.cython.overrideAttrs (old: {
+        inherit (pkgs.python3Packages.cython) setupHook;
+      });
+
+      # Use setup hook from nixpkgs (pretends version)
+      pdm-backend = prev.pdm-backend.overrideAttrs (old: {
+        inherit (pkgs.python3Packages.pdm-backend) setupHook;
+      });
+
+      # Adapt setup hook from nixpkgs
+      whool = prev.whool.overrideAttrs (old: {
+        setupHook = pkgs.writeText "whool-setup-hook.sh" ''
+          # Avoid using git to auto-bump the addon version
+          # DOCS https://github.com/sbidoul/whool/?tab=readme-ov-file#configuration
+          whool-post-version-strategy-hook() {
+              # DOCS https://stackoverflow.com/a/13864829/1468388
+              if [ -z ''${WHOOL_POST_VERSION_STRATEGY_OVERRIDE+x} ]; then
+                  echo Setting WHOOL_POST_VERSION_STRATEGY_OVERRIDE to none
+                  export WHOOL_POST_VERSION_STRATEGY_OVERRIDE=none
+              fi
+          }
+
+          preBuildHooks+=(whool-post-version-strategy-hook)          
+        '';
+      });
+
     };
 
   # Work around a much larger set of bootstrap dependencies for Python 3.9.
@@ -142,19 +199,21 @@ let
   python39Fixups =
     final: prev:
     if builtins.compareVersions "3.9" prev.python.pythonVersion <= 0 then
-      lib.genAttrs [
-        "importlib-metadata"
-        "setuptools"
-        "setuptools-scm"
-        "typing-extensions"
-        "zipp"
-        "setuptools"
-      ] (
-        name:
-        prev.${name}.override {
-          pyprojectHook = final.pyprojectBootstrapHook;
-        }
-      )
+      lib.genAttrs
+        [
+          "importlib-metadata"
+          "setuptools"
+          "setuptools-scm"
+          "typing-extensions"
+          "zipp"
+          "setuptools"
+        ]
+        (
+          name:
+          prev.${name}.override {
+            pyprojectHook = final.pyprojectBootstrapHook;
+          }
+        )
     else
       { };
 
