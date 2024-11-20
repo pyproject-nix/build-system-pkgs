@@ -194,29 +194,6 @@ let
 
     };
 
-  # Work around a much larger set of bootstrap dependencies for Python 3.9.
-  # TODO: Make a nicer mechanism for bootstrap hermeticity
-  python39Fixups =
-    final: prev:
-    if builtins.compareVersions "3.9" prev.python.pythonVersion <= 0 then
-      lib.genAttrs
-        [
-          "importlib-metadata"
-          "setuptools"
-          "setuptools-scm"
-          "typing-extensions"
-          "zipp"
-          "setuptools"
-        ]
-        (
-          name:
-          prev.${name}.override {
-            pyprojectHook = final.pyprojectBootstrapHook;
-          }
-        )
-    else
-      { };
-
   # Create a resolveBuildSystem function in the same way as pyproject.nix with fallback behaviour.
   # Uses the dependency names of this project as the memoisation names.
   mkResolveBuildSystem =
@@ -240,6 +217,5 @@ lib.composeManyExtensions [
   overlay
   buildSystemOverrides
   overrides
-  python39Fixups
   memoiseBuildSystems
 ]
