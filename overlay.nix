@@ -171,9 +171,19 @@ let
       });
 
       # Use setup hook from nixpkgs (pretends version)
-      pdm-backend = prev.pdm-backend.overrideAttrs (old: {
-        inherit (pkgs.python3Packages.pdm-backend) setupHook;
-      });
+      pdm-backend = prev.pdm-backend.overrideAttrs (
+        old:
+        {
+          inherit (pkgs.python3Packages.pdm-backend) setupHook;
+        }
+        // lib.optionalAttrs (final.python.pythonOlder "3.10") {
+          nativeBuildInputs =
+            old.nativeBuildInputs
+            ++ (final.resolveBuildSystem {
+              importlib-metadata = [ ];
+            });
+        }
+      );
 
       # Adapt setup hook from nixpkgs
       whool = prev.whool.overrideAttrs (old: {
