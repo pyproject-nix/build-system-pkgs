@@ -109,6 +109,9 @@ poetry-core = []
 setuptools = []
 setuptools-scm = []
 
+[plux]
+setuptools = []
+
 [poetry-dynamic-versioning]
 poetry-core = []
 

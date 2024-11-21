@@ -757,6 +757,15 @@ wheels = [
 ]
 
 [[package]]
+name = "plux"
+version = "1.12.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/dd/aa/d40ba10368d566c8e4bf62ac7ce0dcea2e6b7cc1102c1b39e07495b2d347/plux-1.12.1.tar.gz", hash = "sha256:1ed44a6edbb7343f4711ff75ddaf87bed066c53625d41b63a0b4edd3f77792ba", size = 31566 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7c/c3/28e7eb46b3de177e276409bc6e225893c4884cd30c557c292686a0fcbbdf/plux-1.12.1-py3-none-any.whl", hash = "sha256:b4aa4e67329f2fcd73fb28096a8a9304f5912ee6cce39994eac567e8eec65488", size = 33922 },
+]
+
+[[package]]
 name = "poetry-core"
 version = "1.9.1"
 source = { registry = "https://pypi.org/simple" }
@@ -871,6 +880,7 @@ dependencies = [
     { name = "pip" },
     { name = "pkgconfig" },
     { name = "pluggy" },
+    { name = "plux" },
     { name = "poetry-core" },
     { name = "poetry-dynamic-versioning" },
     { name = "pybind11" },
@@ -937,6 +947,7 @@ requires-dist = [
     { name = "pip" },
     { name = "pkgconfig" },
     { name = "pluggy" },
+    { name = "plux", specifier = ">=1.12.1" },
     { name = "poetry-core" },
     { name = "poetry-dynamic-versioning" },
     { name = "pybind11" },
