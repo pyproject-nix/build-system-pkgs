@@ -53,15 +53,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1733285305,
-        "narHash": "sha256-hghdwTYIK32rx9VRJlsECyNc3uMol05oEEMfLBKJUdY=",
-        "owner": "adisbladis",
+        "lastModified": 1733322188,
+        "narHash": "sha256-2NgSaBF/3bJjIt1RCnptoV9C7CiJkMmf7gGLR04F5pg=",
+        "owner": "pyproject-nix",
         "repo": "uv2nix",
-        "rev": "88ceaab6c04a40ab116d1f309d8501f2971f148e",
+        "rev": "b3dc9415c08266d4fa92ad45d70bcf233aa3a998",
         "type": "github"
       },
       "original": {
-        "owner": "adisbladis",
+        "owner": "pyproject-nix",
         "repo": "uv2nix",
         "type": "github"
       }
