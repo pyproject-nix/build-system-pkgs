@@ -2,7 +2,7 @@
   description = "Pyproject.nix base package set";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     pyproject-nix = {
       url = "github:nix-community/pyproject.nix";
