@@ -29,7 +29,7 @@
 
       forAllSystems = lib.genAttrs lib.systems.flakeExposed;
 
-      overlay = import ./overlay.nix { inherit uv2nix pyproject-nix lib; };
+      overlay = import ./default.nix { inherit uv2nix pyproject-nix lib; };
 
     in
     {
