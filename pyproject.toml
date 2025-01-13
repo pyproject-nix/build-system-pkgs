@@ -35,7 +35,6 @@ dependencies = [
   "meson-python",
   "ninja",
   "numpy",
-  "oldest-supported-numpy",
   "packaging",
   "pathspec",
   "pbr",

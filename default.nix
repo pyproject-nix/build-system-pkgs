@@ -196,6 +196,13 @@ let
         ];
       });
 
+      oldest-supported-numpy = final.callPackage ({ stdenv }: stdenv.mkDerivation {
+        inherit (pkgs.python3Packages.oldest-supported-numpy) name pname version src;
+        passthru.dependencies = {
+          numpy = [ ];
+        };
+      }) { };
+
       # Adapt setup hook from nixpkgs
       whool = prev.whool.overrideAttrs (old: {
         setupHook = pkgs.writeText "whool-setup-hook.sh" ''
