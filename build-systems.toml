@@ -125,6 +125,9 @@ setuptools = []
 [pygments]
 hatchling = []
 
+[pymeeus]
+setuptools = []
+
 [pyproject-hooks]
 flit-core = []
 
