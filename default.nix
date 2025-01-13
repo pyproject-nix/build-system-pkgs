@@ -185,6 +185,17 @@ let
         }
       );
 
+      # Libcst is used for editable packages patching, and is a rust package
+      # To avoid depending on wheels or resorting to IFD inherit sources from nixpkgs.
+      libcst = prev.libcst.overrideAttrs(old: {
+        inherit (pkgs.python3Packages.libcst) name pname src version cargoDeps cargoRoot;
+        nativeBuildInputs = old.nativeBuildInputs ++ [
+          pkgs.rustPlatform.cargoSetupHook
+          pkgs.cargo
+          pkgs.rustc
+        ];
+      });
+
       # Adapt setup hook from nixpkgs
       whool = prev.whool.overrideAttrs (old: {
         setupHook = pkgs.writeText "whool-setup-hook.sh" ''
@@ -198,7 +209,7 @@ let
               fi
           }
 
-          preBuildHooks+=(whool-post-version-strategy-hook)          
+          preBuildHooks+=(whool-post-version-strategy-hook)
         '';
       });
 

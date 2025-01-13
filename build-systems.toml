@@ -54,6 +54,10 @@ flit-core = []
 [jupyter-packaging]
 hatchling = []
 
+[libcst]
+setuptools = []
+setuptools-rust = []
+
 [manifestoo-core]
 hatch-vcs = []
 hatchling = []
@@ -134,6 +138,9 @@ flit-core = []
 [pytest-runner]
 setuptools = []
 setuptools-scm = []
+
+[pyyaml]
+setuptools = []
 
 [rich]
 poetry-core = []

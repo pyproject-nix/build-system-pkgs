@@ -27,6 +27,7 @@ dependencies = [
   "installer",
   "jinja2[i18n]",
   "jupyter-packaging",
+  "libcst",
   "manifestoo-core",
   "markupsafe",
   "maturin",
