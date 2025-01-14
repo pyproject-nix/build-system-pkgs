@@ -14,6 +14,7 @@ dependencies = [
   "deprecation",
   "distro",
   "dunamai",
+  "editables",
   "exceptiongroup",
   "flit-core",
   "flit-scm",

@@ -22,6 +22,9 @@ setuptools = []
 [dunamai]
 poetry-core = []
 
+[editables]
+flit-core = []
+
 [exceptiongroup]
 flit-core = []
 flit-scm = []
