@@ -69,4 +69,12 @@ dependencies = [
   "whool",
   "zipp",
   "plux",
+  "uv-build",
+]
+
+[tool.uv]
+no-build-package = [
+  # Not in nixpkgs and depends on rust for sdist build.
+  # Force wheel usage.
+  "uv-build"
 ]
