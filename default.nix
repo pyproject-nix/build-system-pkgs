@@ -8,10 +8,6 @@ let
 
   workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
 
-  overlay = workspace.mkPyprojectOverlay {
-    sourcePreference = "sdist";
-  };
-
   # Supplement build-system metadata
   buildSystems = lib.importTOML ./build-systems.toml;
 
@@ -20,18 +16,37 @@ let
     final: prev:
     lib.mapAttrs (
       name: spec:
-      prev.${name}.overrideAttrs (old: {
-        nativeBuildInputs = old.nativeBuildInputs ++ final.resolveBuildSystem spec;
-      })
+      let
+        drv = prev.${name};
+        format = drv.passthru.format;
+      in
+        # Only add build system if we're building from source
+        if format == "pyproject" then
+          drv.overrideAttrs (old: {
+            nativeBuildInputs = old.nativeBuildInputs ++ final.resolveBuildSystem spec;
+          })
+        else
+          drv
     ) buildSystems;
 
-  # Manually created overrides
-  overrides =
+  # Various fixups to only apply when building from source
+  sdistFixups =
     final: prev:
     let
-      pkgs = final.callPackage ({ pkgs }: pkgs) { };
+      inherit (final) pkgs;
     in
-    {
+    lib.mapAttrs (
+      name: overriden:
+      let
+        drv = prev.${name};
+        format = drv.passthru.format;
+      in
+        # Only add build system if we're building from source
+        if format == "pyproject" then
+          overriden
+        else
+          drv
+    ) {
       hatchling = prev.hatchling.overrideAttrs (old: {
         nativeBuildInputs =
           old.nativeBuildInputs
@@ -44,12 +59,6 @@ let
           ++ final.resolveBuildSystem final.flit-scm.passthru.dependencies;
       });
 
-      cffi = prev.cffi.overrideAttrs (old: {
-        buildInputs = [
-          pkgs.libffi
-        ];
-      });
-
       numpy = prev.numpy.overrideAttrs (old: {
         nativeBuildInputs = old.nativeBuildInputs ++ [
           pkgs.pkg-config
@@ -57,53 +66,6 @@ let
           pkgs.lapack
         ];
       });
-
-      # Use stub from nixpkgs
-      cmake = final.callPackage (
-        { stdenv, python3Packages }:
-        stdenv.mkDerivation {
-          inherit (python3Packages.cmake)
-            pname
-            version
-            src
-            meta
-            postUnpack
-            setupHooks
-            ;
-
-          nativeBuildInputs =
-            [
-              final.pyprojectHook
-            ]
-            ++ final.resolveBuildSystem {
-              flit-core = [ ];
-            };
-        }
-      ) { };
-
-      # Use stub from nixpkgs
-      ninja = final.callPackage (
-        { stdenv, python3Packages }:
-        stdenv.mkDerivation {
-          inherit (python3Packages.ninja)
-            pname
-            version
-            src
-            meta
-            postUnpack
-            setupHook
-            preBuild
-            ;
-
-          nativeBuildInputs =
-            [
-              final.pyprojectHook
-            ]
-            ++ final.resolveBuildSystem {
-              flit-core = [ ];
-            };
-        }
-      ) { };
 
       # Use maturin sources from nixpkgs because of Cargo dependencies
       maturin = final.callPackage (
@@ -139,44 +101,8 @@ let
         }
       ) { };
 
-      # Use setup hook from nixpkgs (pretends version)
-      setuptools-scm = prev.setuptools-scm.overrideAttrs (old: {
-        inherit (pkgs.python3Packages.setuptools-scm) setupHook;
-      });
-
-      # Use setup hook from nixpkgs (sets up build)
-      pkgconfig = prev.pkgconfig.overrideAttrs (old: {
-        inherit (pkgs.pkg-config)
-          setupHooks
-          wrapperName
-          suffixSalt
-          targetPrefix
-          baseBinName
-          ;
-      });
-
-      # Use setup hook from nixpkgs (sets up build)
-      meson-python = prev.meson-python.overrideAttrs (old: {
-        inherit (pkgs.python3Packages.meson-python) setupHooks;
-      });
-
-      # Use setup hook from nixpkgs (pretends version)
-      poetry-dynamic-versioning = prev.poetry-dynamic-versioning.overrideAttrs (old: {
-        inherit (pkgs.python3Packages.poetry-dynamic-versioning) setupHook;
-      });
-
-      # Use setup hook from nixpkgs (forces cython regen)
-      cython = prev.cython.overrideAttrs (old: {
-        inherit (pkgs.python3Packages.cython) setupHook;
-      });
-
-      # Use setup hook from nixpkgs (pretends version)
       pdm-backend = prev.pdm-backend.overrideAttrs (
-        old:
-        {
-          inherit (pkgs.python3Packages.pdm-backend) setupHook;
-        }
-        // lib.optionalAttrs (final.python.pythonOlder "3.10") {
+        old: lib.optionalAttrs (final.python.pythonOlder "3.10") {
           nativeBuildInputs =
             old.nativeBuildInputs
             ++ (final.resolveBuildSystem {
@@ -202,24 +128,6 @@ let
           numpy = [ ];
         };
       }) { };
-
-      # Adapt setup hook from nixpkgs
-      whool = prev.whool.overrideAttrs (old: {
-        setupHook = pkgs.writeText "whool-setup-hook.sh" ''
-          # Avoid using git to auto-bump the addon version
-          # DOCS https://github.com/sbidoul/whool/?tab=readme-ov-file#configuration
-          whool-post-version-strategy-hook() {
-              # DOCS https://stackoverflow.com/a/13864829/1468388
-              if [ -z ''${WHOOL_POST_VERSION_STRATEGY_OVERRIDE+x} ]; then
-                  echo Setting WHOOL_POST_VERSION_STRATEGY_OVERRIDE to none
-                  export WHOOL_POST_VERSION_STRATEGY_OVERRIDE=none
-              fi
-          }
-
-          preBuildHooks+=(whool-post-version-strategy-hook)
-        '';
-      });
-
     };
 
   # Create a resolveBuildSystem function in the same way as pyproject.nix with fallback behaviour.
@@ -240,10 +148,129 @@ let
     resolveBuildSystem = mkResolveBuildSystem final.pythonPkgsBuildHost;
   };
 
+  # Manually created overrides applied regardless of build type
+  overrides =
+    final: prev:
+    let
+      pkgs = final.callPackage ({ pkgs }: pkgs) { };
+    in
+    {
+      # Use setup hook from nixpkgs (forces cython regen)
+      cython = prev.cython.overrideAttrs (old: {
+        inherit (pkgs.python3Packages.cython) setupHook;
+      });
+
+      # Use stub from nixpkgs
+      cmake = final.callPackage (
+        { stdenv, python3Packages }:
+        stdenv.mkDerivation {
+          inherit (python3Packages.cmake)
+            pname
+            version
+            src
+            meta
+            postUnpack
+            setupHooks
+            ;
+
+          nativeBuildInputs =
+            [
+              final.pyprojectHook
+            ]
+            ++ final.resolveBuildSystem {
+              flit-core = [ ];
+            };
+        }
+      ) { };
+
+      # Use setup hook from nixpkgs (sets up build)
+      meson-python = prev.meson-python.overrideAttrs (old: {
+        inherit (pkgs.python3Packages.meson-python) setupHooks;
+      });
+
+      # Use setup hook from nixpkgs (pretends version)
+      setuptools-scm = prev.setuptools-scm.overrideAttrs (old: {
+        inherit (pkgs.python3Packages.setuptools-scm) setupHook;
+      });
+
+      # Use setup hook from nixpkgs (pretends version)
+      poetry-dynamic-versioning = prev.poetry-dynamic-versioning.overrideAttrs (old: {
+        inherit (pkgs.python3Packages.poetry-dynamic-versioning) setupHook;
+      });
+
+      # Use setup hook from nixpkgs (pretends version)
+      pdm-backend = prev.pdm-backend.overrideAttrs (
+        old: {
+          inherit (pkgs.python3Packages.pdm-backend) setupHook;
+        }
+      );
+
+      # Use setup hook from nixpkgs (sets up build)
+      pkgconfig = prev.pkgconfig.overrideAttrs (old: {
+        inherit (pkgs.pkg-config)
+          setupHooks
+          wrapperName
+          suffixSalt
+          targetPrefix
+          baseBinName
+          ;
+      });
+
+      cffi = prev.cffi.overrideAttrs (old: {
+        buildInputs = [
+          pkgs.libffi
+        ];
+      });
+
+      # Use stub from nixpkgs
+      ninja = final.callPackage (
+        { stdenv, python3Packages }:
+        stdenv.mkDerivation {
+          inherit (python3Packages.ninja)
+            pname
+            version
+            src
+            meta
+            postUnpack
+            setupHook
+            preBuild
+            ;
+
+          nativeBuildInputs =
+            [
+              final.pyprojectHook
+            ]
+            ++ final.resolveBuildSystem {
+              flit-core = [ ];
+            };
+        }
+      ) { };
+
+      # Adapt setup hook from nixpkgs
+      whool = prev.whool.overrideAttrs (old: {
+        setupHook = pkgs.writeText "whool-setup-hook.sh" ''
+          # Avoid using git to auto-bump the addon version
+          # DOCS https://github.com/sbidoul/whool/?tab=readme-ov-file#configuration
+          whool-post-version-strategy-hook() {
+              # DOCS https://stackoverflow.com/a/13864829/1468388
+              if [ -z ''${WHOOL_POST_VERSION_STRATEGY_OVERRIDE+x} ]; then
+                  echo Setting WHOOL_POST_VERSION_STRATEGY_OVERRIDE to none
+                  export WHOOL_POST_VERSION_STRATEGY_OVERRIDE=none
+              fi
+          }
+
+          preBuildHooks+=(whool-post-version-strategy-hook)
+        '';
+      });
+
+    };
+
 in
+{ sourcePreference }:
 lib.composeManyExtensions [
-  overlay
+  (workspace.mkPyprojectOverlay { inherit sourcePreference; })
   buildSystemOverrides
+  sdistFixups
   overrides
   memoiseBuildSystems
 ]

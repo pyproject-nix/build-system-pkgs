@@ -29,25 +29,36 @@
 
       forAllSystems = lib.genAttrs lib.systems.flakeExposed;
 
-      overlay = import ./default.nix { inherit uv2nix pyproject-nix lib; };
+      mkOverlay = import ./default.nix { inherit uv2nix pyproject-nix lib; };
 
     in
     {
-      overlays.default = overlay;
+      overlays = {
+        default = self.overlays.sdist;
+        sdist = mkOverlay { sourcePreference = "sdist"; };
+        wheel = mkOverlay { sourcePreference = "wheel"; };
+      };
 
       checks = forAllSystems (
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
           inherit (pkgs) callPackage;
+          inherit (lib) nameValuePair;
+
+          interpreters =  lib.filterAttrs (
+            n: drv: lib.hasPrefix "python3" n && n != "python3Minimal" && !isPre drv.version
+          ) pkgs.pythonInterpreters;
 
           mkCheck =
-            prefix: python:
+            sourcePreference: prefix: python:
             let
               baseSet = callPackage pyproject-nix.build.packages {
                 inherit python;
               };
-              pythonSet = baseSet.overrideScope overlay;
+              pythonSet = baseSet.overrideScope (mkOverlay {
+                inherit sourcePreference;
+              });
 
               venv = pythonSet.mkVirtualEnv "${prefix}-venv" {
                 pyproject-nix-build-system-pkgs = [ ];
@@ -68,11 +79,17 @@
           isPre = version: (pyproject-nix.lib.pep440.parseVersion version).pre != null;
 
         in
-        lib.mapAttrs mkCheck (
-          lib.filterAttrs (
-            n: drv: lib.hasPrefix "python3" n && n != "python3Minimal" && !isPre drv.version
-          ) pkgs.pythonInterpreters
-        )
+          (
+            let
+              mkCheck' = mkCheck "sdist";
+            in
+            lib.mapAttrs' (name: python: nameValuePair "${name}-pref-sdist" (mkCheck' name python)) interpreters
+          ) // (
+            let
+              mkCheck' = mkCheck "wheel";
+            in
+            lib.mapAttrs' (name: python: nameValuePair "${name}-pref-wheel" (mkCheck' name python)) interpreters
+          )
       );
 
       devShells = forAllSystems (
