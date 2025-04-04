@@ -29,15 +29,9 @@
 
       forAllSystems = lib.genAttrs lib.systems.flakeExposed;
 
-      mkOverlay = import ./default.nix { inherit uv2nix pyproject-nix lib; };
-
     in
     {
-      overlays = {
-        default = self.overlays.sdist;
-        sdist = mkOverlay { sourcePreference = "sdist"; };
-        wheel = mkOverlay { sourcePreference = "wheel"; };
-      };
+      overlays = import ./default.nix { inherit uv2nix pyproject-nix lib; };
 
       checks = forAllSystems (
         system:
@@ -56,10 +50,7 @@
               baseSet = callPackage pyproject-nix.build.packages {
                 inherit python;
               };
-              pythonSet = baseSet.overrideScope (mkOverlay {
-                inherit sourcePreference;
-              });
-
+              pythonSet = baseSet.overrideScope self.overlays.${sourcePreference};
               venv = pythonSet.mkVirtualEnv "${prefix}-venv" {
                 pyproject-nix-build-system-pkgs = [ ];
               };
