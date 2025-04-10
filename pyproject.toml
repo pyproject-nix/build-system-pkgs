@@ -70,6 +70,7 @@ dependencies = [
   "zipp",
   "plux",
   "uv-build",
+  "hatch-protobuf",
 ]
 
 [tool.uv]
