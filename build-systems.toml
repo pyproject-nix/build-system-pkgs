@@ -29,6 +29,12 @@ flit-core = []
 flit-core = []
 flit-scm = []
 
+[grpcio]
+setuptools = []
+
+[grpcio-tools]
+setuptools = []
+
 [hatch-fancy-pypi-readme]
 hatchling = []
 
@@ -37,6 +43,10 @@ hatchling = []
 
 [hatch-nodejs-version]
 hatchling = []
+
+[hatch-protobuf]
+hatchling = []
+hatch-vcs = []
 
 [hatch-requirements-txt]
 hatchling = []
@@ -121,6 +131,9 @@ setuptools = []
 
 [poetry-dynamic-versioning]
 poetry-core = []
+
+[protobuf]
+setuptools = []
 
 [pybind11]
 setuptools = []

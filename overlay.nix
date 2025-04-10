@@ -33,6 +33,7 @@ let
   sdistFixups =
     final: prev:
     let
+      inherit (prev) stdenv;
       inherit (final) pkgs;
     in
     lib.mapAttrs (
@@ -57,6 +58,30 @@ let
         nativeBuildInputs =
           old.nativeBuildInputs
           ++ final.resolveBuildSystem final.flit-scm.passthru.dependencies;
+      });
+
+      grpcio = prev.grpcio.overrideAttrs (old: {
+        preBuild =
+          ''
+            export GRPC_PYTHON_BUILD_EXT_COMPILER_JOBS="$NIX_BUILD_CORES"
+            if [ -z "$enableParallelBuilding" ]; then
+              GRPC_PYTHON_BUILD_EXT_COMPILER_JOBS=1
+            fi
+          ''
+          + lib.optionalString stdenv.hostPlatform.isDarwin ''
+            unset AR
+          '';
+
+        buildInputs = (old.buildInputs or [ ]) ++ [
+          pkgs.c-ares
+          pkgs.openssl
+          pkgs.zlib
+        ];
+
+        GRPC_BUILD_WITH_BORING_SSL_ASM = "";
+        GRPC_PYTHON_BUILD_SYSTEM_OPENSSL = 1;
+        GRPC_PYTHON_BUILD_SYSTEM_ZLIB = 1;
+        GRPC_PYTHON_BUILD_SYSTEM_CARES = 1;
       });
 
       numpy = prev.numpy.overrideAttrs (old: {
