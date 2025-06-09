@@ -48,6 +48,16 @@ let
         else
           drv
     ) {
+
+      pydantic-core = prev.pydantic-core.overrideAttrs(old: {
+        inherit (pkgs.python3Packages.pydantic-core) name pname src version cargoDeps;
+        nativeBuildInputs = old.nativeBuildInputs ++ [
+          pkgs.rustPlatform.cargoSetupHook
+          pkgs.cargo
+          pkgs.rustc
+        ];
+      });
+
       hatchling = prev.hatchling.overrideAttrs (old: {
         nativeBuildInputs =
           old.nativeBuildInputs

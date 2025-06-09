@@ -71,6 +71,7 @@ dependencies = [
   "plux",
   "uv-build",
   "hatch-protobuf",
+  "uv-dynamic-versioning",
 ]
 
 [tool.uv]
