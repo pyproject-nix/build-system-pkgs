@@ -1,3 +1,6 @@
+[annotated-types]
+hatchling = []
+
 [babel]
 setuptools = []
 
@@ -142,6 +145,14 @@ wheel = []
 [pycparser]
 setuptools = []
 
+[pydantic]
+hatchling = []
+hatch-fancy-pypi-readme = []
+
+[pydantic-core]
+maturin = []
+typing-extensions = []
+
 [pygments]
 hatchling = []
 
@@ -156,6 +167,9 @@ setuptools = []
 setuptools-scm = []
 
 [pyyaml]
+setuptools = []
+
+[pyyaml-ft]
 setuptools = []
 
 [rich]
@@ -207,6 +221,12 @@ setuptools = []
 
 [typing-extensions]
 flit-core = []
+
+[typing-inspection]
+hatchling = []
+
+[uv-dynamic-versioning]
+hatchling = []
 
 [versioneer]
 setuptools = []
