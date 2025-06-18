@@ -32,6 +32,10 @@ flit-core = []
 flit-core = []
 flit-scm = []
 
+[flatdict]
+setuptools = []
+wheel = []
+
 [grpcio]
 setuptools = []
 
