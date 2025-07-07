@@ -32,6 +32,9 @@ flit-core = []
 flit-core = []
 flit-scm = []
 
+[expandvars]
+hatchling = []
+
 [grpcio]
 setuptools = []
 
@@ -125,6 +128,10 @@ setuptools = []
 [pkgconfig]
 poetry-core = []
 
+[platformdirs]
+hatch-vcs = []
+hatchling = []
+
 [pluggy]
 setuptools = []
 setuptools-scm = []
@@ -137,6 +144,9 @@ poetry-core = []
 
 [protobuf]
 setuptools = []
+
+[py-generator-build-backend]
+hatchling = []
 
 [pybind11]
 scikit-build-core = []
