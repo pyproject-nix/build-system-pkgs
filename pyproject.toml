@@ -46,6 +46,7 @@ dependencies = [
   "pluggy",
   "poetry-core",
   "poetry-dynamic-versioning",
+  "py-generator-build-backend",
   "pybind11",
   "pycparser",
   "pyproject-hooks",

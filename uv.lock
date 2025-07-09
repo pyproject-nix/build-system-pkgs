@@ -278,6 +278,15 @@ wheels = [
 ]
 
 [[package]]
+name = "expandvars"
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/93/a7/997a548c9ed679d7b93c87e091eba591e7cd9fd82ca727136b4b5b9e24cd/expandvars-1.0.0.tar.gz", hash = "sha256:f04070b8260264185f81142cd85e5df9ceef7229e836c5844302c4ccfa00c30d", size = 11388, upload-time = "2025-03-23T11:04:21.483Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/29/ff/a2440069461c63b95fa8b5b89e26eb606e57d8a01391ccaae3738f1b845d/expandvars-1.0.0-py3-none-any.whl", hash = "sha256:ff1690eceb90bbdeefd1e4b15f4d217f22a3e66f776c2cb060635d2dde4a7689", size = 7377, upload-time = "2025-03-23T11:04:19.679Z" },
+]
+
+[[package]]
 name = "flit-core"
 version = "3.12.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1011,6 +1020,15 @@ wheels = [
 ]
 
 [[package]]
+name = "platformdirs"
+version = "4.3.8"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/fe/8b/3c73abc9c759ecd3f1f7ceff6685840859e8070c4d947c93fae71f6a0bf2/platformdirs-4.3.8.tar.gz", hash = "sha256:3d512d96e16bcb959a814c9f348431070822a6496326a4be0911c40b5a74c2bc", size = 21362, upload-time = "2025-05-07T22:47:42.121Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/fe/39/979e8e21520d4e47a0bbe349e2713c0aac6f3d853d0e5b34d76206c439aa/platformdirs-4.3.8-py3-none-any.whl", hash = "sha256:ff7059bb7eb1179e2685604f4aaf157cfd9535242bd23742eadc3c13542139b4", size = 18567, upload-time = "2025-05-07T22:47:40.376Z" },
+]
+
+[[package]]
 name = "pluggy"
 version = "1.6.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1065,6 +1083,21 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/e5/59/ca89678bb0352f094fc92f2b358daa40e3acc91a93aa8f922b24762bf841/protobuf-5.29.5-cp39-cp39-win32.whl", hash = "sha256:6f642dc9a61782fa72b90878af134c5afe1917c89a568cd3476d758d3c3a0736", size = 423025, upload-time = "2025-05-28T23:51:54.003Z" },
     { url = "https://files.pythonhosted.org/packages/96/8b/2c62731fe3e92ddbbeca0174f78f0f8739197cdeb7c75ceb5aad3706963b/protobuf-5.29.5-cp39-cp39-win_amd64.whl", hash = "sha256:470f3af547ef17847a28e1f47200a1cbf0ba3ff57b7de50d22776607cd2ea353", size = 434906, upload-time = "2025-05-28T23:51:55.782Z" },
     { url = "https://files.pythonhosted.org/packages/7e/cc/7e77861000a0691aeea8f4566e5d3aa716f2b1dece4a24439437e41d3d25/protobuf-5.29.5-py3-none-any.whl", hash = "sha256:6cf42630262c59b2d8de33954443d94b746c952b01434fc58a417fdbd2e84bd5", size = 172823, upload-time = "2025-05-28T23:51:58.157Z" },
+]
+
+[[package]]
+name = "py-generator-build-backend"
+version = "1.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "expandvars" },
+    { name = "packaging" },
+    { name = "platformdirs" },
+    { name = "pyproject-hooks" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/60/2e/f317679652206b7fecf464d89b4f0f3c7f7546cb6793dc4fb2b83d32a44b/py_generator_build_backend-1.1.0.tar.gz", hash = "sha256:2bdc1bb3aa633f92a27d39e7bfe8abc029975d1a937bac8284daa1ee11bcde6c", size = 8016, upload-time = "2025-07-07T11:03:24.239Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ac/45/ecf0bb133d2d9edca9feefe0f3bcd647c88608fe97a6c134e33dcbe79672/py_generator_build_backend-1.1.0-py3-none-any.whl", hash = "sha256:b9da2cd867271837ba22b4e3fe719743b4f8e0ba832f75427079bdfdba8ebe1a", size = 5385, upload-time = "2025-07-07T11:03:23.384Z" },
 ]
 
 [[package]]
@@ -1288,6 +1321,7 @@ dependencies = [
     { name = "plux" },
     { name = "poetry-core" },
     { name = "poetry-dynamic-versioning" },
+    { name = "py-generator-build-backend" },
     { name = "pybind11" },
     { name = "pycparser" },
     { name = "pyproject-hooks" },
@@ -1359,6 +1393,7 @@ requires-dist = [
     { name = "plux" },
     { name = "poetry-core" },
     { name = "poetry-dynamic-versioning" },
+    { name = "py-generator-build-backend" },
     { name = "pybind11" },
     { name = "pycparser" },
     { name = "pyproject-hooks" },
