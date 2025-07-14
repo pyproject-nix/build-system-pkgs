@@ -136,8 +136,7 @@ poetry-core = []
 setuptools = []
 
 [pybind11]
-setuptools = []
-wheel = []
+scikit-build-core = []
 
 [pycparser]
 setuptools = []
