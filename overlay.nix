@@ -146,6 +146,14 @@ let
         }
       );
 
+      pybind11 = prev.pybind11.overrideAttrs(old: {
+        nativeBuildInputs =
+          old.nativeBuildInputs
+          ++ [
+            pkgs.cmake
+          ];
+      });
+
       # Libcst is used for editable packages patching, and is a rust package
       # To avoid depending on wheels or resorting to IFD inherit sources from nixpkgs.
       libcst = prev.libcst.overrideAttrs(old: {

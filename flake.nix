@@ -59,6 +59,9 @@
             pkgs.runCommand "${prefix}-venv-test"
               {
                 nativeBuildInputs = [ venv ];
+                passthru = {
+                  inherit pythonSet venv;
+                };
               }
               ''
                 python -c "import setuptools"
