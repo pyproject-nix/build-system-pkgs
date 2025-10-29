@@ -1,8 +1,8 @@
 # build-system-pkgs
 
-Python dependency managers such as [`uv`](https://docs.astral.sh/uv/) [does not lock PEP-517 build-systems](https://github.com/astral-sh/uv/issues/5190), and [`pyproject.nix`'s builders](https://nix-community.github.io/pyproject.nix/build.html) does not come with a Python package set.
+Python dependency managers such as [`uv`](https://docs.astral.sh/uv/) [does not lock PEP-517 build-systems](https://github.com/astral-sh/uv/issues/5190), and [`pyproject.nix`'s builders](https://pyproject-nix.github.io/pyproject.nix/build.html) does not come with a Python package set.
 
-This repository exists to be used as a base repository for [overriding](https://nix-community.github.io/pyproject.nix/builders/overriding.html) build-system dependencies.
+This repository exists to be used as a base repository for [overriding](https://pyproject-nix.github.io/pyproject.nix/builders/overriding.html) build-system dependencies.
 Without a base package set you'd have to include build-systems to your project dependencies.
 
 Auto-updates on a weekly basis. Automated testing of the package set is done for all stable CPython interpreters in the Nixpkgs unstable channel.
