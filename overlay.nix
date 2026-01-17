@@ -14,20 +14,31 @@ let
   # Build-systems overlay
   buildSystemOverrides =
     final: prev:
-    lib.mapAttrs (
-      name: spec:
-      let
-        drv = prev.${name};
-        format = drv.passthru.format;
-      in
-        # Only add build system if we're building from source
-        if format == "pyproject" then
-          drv.overrideAttrs (old: {
-            nativeBuildInputs = old.nativeBuildInputs ++ final.resolveBuildSystem spec;
-          })
-        else
-          drv
-    ) buildSystems;
+    lib.listToAttrs (
+      lib.concatMap
+      (
+        name:
+        if ! prev ? ${name} then []
+        else [
+          {
+            inherit name;
+            value = let
+              spec = buildSystems.${name};
+              drv = prev.${name};
+              format = drv.passthru.format;
+            in
+              # Only add build system if we're building from source
+              if format == "pyproject" then
+                drv.overrideAttrs (old: {
+                  nativeBuildInputs = old.nativeBuildInputs ++ final.resolveBuildSystem spec;
+                })
+              else
+                drv;
+          }
+        ]
+      )
+      (lib.attrNames buildSystems)
+    );
 
   # Various fixups to only apply when building from source
   sdistFixups =
@@ -35,143 +46,149 @@ let
     let
       inherit (prev) stdenv;
       inherit (final) pkgs;
-    in
-    lib.mapAttrs (
-      name: overriden:
-      let
-        drv = prev.${name};
-        format = drv.passthru.format;
-      in
-        # Only add build system if we're building from source
-        if format == "pyproject" then
-          overriden
-        else
-          drv
-    ) {
 
-      pydantic-core = prev.pydantic-core.overrideAttrs(old: {
-        inherit (pkgs.python3Packages.pydantic-core) name pname src version cargoDeps;
-        nativeBuildInputs = old.nativeBuildInputs ++ [
-          pkgs.rustPlatform.cargoSetupHook
-          pkgs.cargo
-          pkgs.rustc
-        ];
-      });
+      fixups = {
+        pydantic-core = prev.pydantic-core.overrideAttrs(old: {
+          inherit (pkgs.python3Packages.pydantic-core) name pname src version cargoDeps;
+          nativeBuildInputs = old.nativeBuildInputs ++ [
+            pkgs.rustPlatform.cargoSetupHook
+            pkgs.cargo
+            pkgs.rustc
+          ];
+        });
 
-      hatchling = prev.hatchling.overrideAttrs (old: {
-        nativeBuildInputs =
-          old.nativeBuildInputs
-          ++ final.resolveBuildSystem final.hatchling.passthru.dependencies;
-      });
-
-      flit-scm = prev.flit-scm.overrideAttrs (old: {
-        nativeBuildInputs =
-          old.nativeBuildInputs
-          ++ final.resolveBuildSystem final.flit-scm.passthru.dependencies;
-      });
-
-      grpcio = prev.grpcio.overrideAttrs (old: {
-        preBuild =
-          ''
-            export GRPC_PYTHON_BUILD_EXT_COMPILER_JOBS="$NIX_BUILD_CORES"
-            if [ -z "$enableParallelBuilding" ]; then
-              GRPC_PYTHON_BUILD_EXT_COMPILER_JOBS=1
-            fi
-          ''
-          + lib.optionalString stdenv.hostPlatform.isDarwin ''
-            unset AR
-          '';
-
-        buildInputs = (old.buildInputs or [ ]) ++ [
-          pkgs.c-ares
-          pkgs.openssl
-          pkgs.zlib
-        ];
-
-        GRPC_BUILD_WITH_BORING_SSL_ASM = "";
-        GRPC_PYTHON_BUILD_SYSTEM_OPENSSL = 1;
-        GRPC_PYTHON_BUILD_SYSTEM_ZLIB = 1;
-        GRPC_PYTHON_BUILD_SYSTEM_CARES = 1;
-      });
-
-      numpy = prev.numpy.overrideAttrs (old: {
-        nativeBuildInputs = old.nativeBuildInputs ++ [
-          pkgs.pkg-config
-          pkgs.blas
-          pkgs.lapack
-        ];
-      });
-
-      # Use maturin sources from nixpkgs because of Cargo dependencies
-      maturin = final.callPackage (
-        {
-          stdenv,
-          pkgs,
-        }:
-        stdenv.mkDerivation {
-          inherit (pkgs.maturin)
-            pname
-            version
-            cargoDeps
-            src
-            meta
-            ;
-
-          # Dependency metadata from uv.lock
-          inherit (prev.maturin) passthru;
-
-          nativeBuildInputs =
-            [
-              pkgs.rustPlatform.cargoSetupHook
-              final.pyprojectHook
-              pkgs.cargo
-              pkgs.rustc
-            ]
-            ++ final.resolveBuildSystem {
-              setuptools = [ ];
-              wheel = [ ];
-              tomli = [ ];
-              setuptools-rust = [ ];
-            };
-        }
-      ) { };
-
-      pdm-backend = prev.pdm-backend.overrideAttrs (
-        old: lib.optionalAttrs (final.python.pythonOlder "3.10") {
+        hatchling = prev.hatchling.overrideAttrs (old: {
           nativeBuildInputs =
             old.nativeBuildInputs
-            ++ (final.resolveBuildSystem {
-              importlib-metadata = [ ];
-            });
-        }
-      );
+            ++ final.resolveBuildSystem final.hatchling.passthru.dependencies;
+        });
 
-      pybind11 = prev.pybind11.overrideAttrs(old: {
-        nativeBuildInputs =
-          old.nativeBuildInputs
-          ++ [
-            pkgs.cmake
+        flit-scm = prev.flit-scm.overrideAttrs (old: {
+          nativeBuildInputs =
+            old.nativeBuildInputs
+            ++ final.resolveBuildSystem final.flit-scm.passthru.dependencies;
+        });
+
+        grpcio = prev.grpcio.overrideAttrs (old: {
+          preBuild =
+            ''
+              export GRPC_PYTHON_BUILD_EXT_COMPILER_JOBS="$NIX_BUILD_CORES"
+              if [ -z "$enableParallelBuilding" ]; then
+                GRPC_PYTHON_BUILD_EXT_COMPILER_JOBS=1
+              fi
+            ''
+            + lib.optionalString stdenv.hostPlatform.isDarwin ''
+              unset AR
+            '';
+
+          buildInputs = (old.buildInputs or [ ]) ++ [
+            pkgs.c-ares
+            pkgs.openssl
+            pkgs.zlib
           ];
-      });
 
-      # Libcst is used for editable packages patching, and is a rust package
-      # To avoid depending on wheels or resorting to IFD inherit sources from nixpkgs.
-      libcst = prev.libcst.overrideAttrs(old: {
-        inherit (pkgs.python3Packages.libcst) name pname src version cargoDeps cargoRoot;
-        nativeBuildInputs = old.nativeBuildInputs ++ [
-          pkgs.rustPlatform.cargoSetupHook
-          pkgs.cargo
-          pkgs.rustc
-        ];
-      });
+          GRPC_BUILD_WITH_BORING_SSL_ASM = "";
+          GRPC_PYTHON_BUILD_SYSTEM_OPENSSL = 1;
+          GRPC_PYTHON_BUILD_SYSTEM_ZLIB = 1;
+          GRPC_PYTHON_BUILD_SYSTEM_CARES = 1;
+        });
 
-      oldest-supported-numpy = final.callPackage ({ stdenv }: stdenv.mkDerivation {
-        inherit (pkgs.python3Packages.oldest-supported-numpy) name pname version src;
-        passthru.dependencies = {
-          numpy = [ ];
-        };
-      }) { };
-    };
+        numpy = prev.numpy.overrideAttrs (old: {
+          nativeBuildInputs = old.nativeBuildInputs ++ [
+            pkgs.pkg-config
+            pkgs.blas
+            pkgs.lapack
+          ];
+        });
+
+        pdm-backend = prev.pdm-backend.overrideAttrs (
+          old: lib.optionalAttrs (final.python.pythonOlder "3.10") {
+            nativeBuildInputs =
+              old.nativeBuildInputs
+              ++ (final.resolveBuildSystem {
+                importlib-metadata = [ ];
+              });
+          }
+        );
+
+        pybind11 = prev.pybind11.overrideAttrs(old: {
+          nativeBuildInputs =
+            old.nativeBuildInputs
+            ++ [
+              pkgs.cmake
+            ];
+        });
+
+        # Libcst is used for editable packages patching, and is a rust package
+        # To avoid depending on wheels or resorting to IFD inherit sources from nixpkgs.
+        libcst = prev.libcst.overrideAttrs(old: {
+          inherit (pkgs.python3Packages.libcst) name pname src version cargoDeps cargoRoot;
+          nativeBuildInputs = old.nativeBuildInputs ++ [
+            pkgs.rustPlatform.cargoSetupHook
+            pkgs.cargo
+            pkgs.rustc
+          ];
+        });
+      };
+
+      additions = {
+        # Use maturin sources from nixpkgs because of Cargo dependencies
+        maturin = final.callPackage (
+          {
+            stdenv,
+            pkgs,
+          }:
+          stdenv.mkDerivation {
+            inherit (pkgs.maturin)
+              pname
+              version
+              cargoDeps
+              src
+              meta
+              ;
+
+            # Dependency metadata from uv.lock
+            inherit (prev.maturin) passthru;
+
+            nativeBuildInputs =
+              [
+                pkgs.rustPlatform.cargoSetupHook
+                final.pyprojectHook
+                pkgs.cargo
+                pkgs.rustc
+              ]
+              ++ final.resolveBuildSystem {
+                setuptools = [ ];
+                wheel = [ ];
+                tomli = [ ];
+                setuptools-rust = [ ];
+              };
+          }
+        ) { };
+
+        oldest-supported-numpy = final.callPackage ({ stdenv }: stdenv.mkDerivation {
+          inherit (pkgs.python3Packages.oldest-supported-numpy) name pname version src;
+          passthru.dependencies = {
+            numpy = [ ];
+          };
+        }) { };
+      };
+
+    in
+      (lib.listToAttrs (
+        lib.concatMap
+          (
+            name:
+            if ! prev ? ${name} then []
+            else [
+              {
+                inherit name;
+                value = fixups.${name};
+              }
+            ]
+          )
+        (lib.attrNames fixups)
+      )) // additions;
 
   # Create a resolveBuildSystem function in the same way as pyproject.nix with fallback behaviour.
   # Uses the dependency names of this project as the memoisation names.
