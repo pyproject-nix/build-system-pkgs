@@ -146,6 +146,46 @@ wheels = [
 ]
 
 [[package]]
+name = "click"
+version = "8.1.8"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.10' and sys_platform != 'ios'",
+    "python_full_version < '3.10' and sys_platform == 'ios'",
+]
+dependencies = [
+    { name = "colorama", marker = "python_full_version < '3.10' and sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz", hash = "sha256:ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a", size = 226593, upload-time = "2024-12-21T18:38:44.339Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7e/d4/7ebdbd03970677812aac39c869717059dbb71a4cfc033ca6e5221787892c/click-8.1.8-py3-none-any.whl", hash = "sha256:63c132bbbed01578a06712a2d1f497bb62d9c1c0d329b7903a866228027263b2", size = 98188, upload-time = "2024-12-21T18:38:41.666Z" },
+]
+
+[[package]]
+name = "click"
+version = "8.3.1"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.14' and sys_platform != 'ios'",
+    "python_full_version >= '3.14' and sys_platform == 'ios'",
+    "python_full_version == '3.13.*' and sys_platform != 'ios'",
+    "python_full_version == '3.13.*' and sys_platform == 'ios'",
+    "python_full_version == '3.12.*' and sys_platform != 'ios'",
+    "python_full_version == '3.12.*' and sys_platform == 'ios'",
+    "python_full_version == '3.11.*' and sys_platform != 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
+    "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform == 'ios'",
+]
+dependencies = [
+    { name = "colorama", marker = "python_full_version >= '3.10' and sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3d/fa/656b739db8587d7b5dfa22e22ed02566950fbfbcdc20311993483657a5c0/click-8.3.1.tar.gz", hash = "sha256:12ff4785d337a1bb490bb7e9c2b1ee5da3112e94a8622f26a6c77f5d2fc6842a", size = 295065, upload-time = "2025-11-15T20:45:42.706Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/98/78/01c019cdb5d6498122777c1a43056ebb3ebfeef2076d9d026bfe15583b2b/click-8.3.1-py3-none-any.whl", hash = "sha256:981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6", size = 108274, upload-time = "2025-11-15T20:45:41.139Z" },
+]
+
+[[package]]
 name = "cmake"
 version = "4.2.1"
 source = { registry = "https://pypi.org/simple" }
@@ -232,6 +272,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/5a/d3/8ae2869247df154b64c1884d7346d412fed0c49df84db635aab2d1c40e62/deprecation-2.1.0.tar.gz", hash = "sha256:72b3bde64e5d778694b0cf68178aed03d15e15477116add3fb773e581f9518ff", size = 173788, upload-time = "2020-04-20T14:23:38.738Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl", hash = "sha256:a10811591210e1fb0e768a8c25517cabeabcba6f0bf96564f8ff45189f90b14a", size = 11178, upload-time = "2020-04-20T14:23:36.581Z" },
+]
+
+[[package]]
+name = "distlib"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/96/8e/709914eb2b5749865801041647dc7f4e6d00b549cfe88b65ca192995f07c/distlib-0.4.0.tar.gz", hash = "sha256:feec40075be03a04501a973d81f633735b4b69f98b05450592310c0f401a4e0d", size = 614605, upload-time = "2025-07-17T16:52:00.465Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/33/6b/e0547afaf41bf2c42e52430072fa5658766e3d65bd4b03a563d1b6336f57/distlib-0.4.0-py2.py3-none-any.whl", hash = "sha256:9659f7d87e46584a30b5780e43ac7a2143098441670ff0a49d5f9034c54a6c16", size = 469047, upload-time = "2025-07-17T16:51:58.613Z" },
 ]
 
 [[package]]
@@ -634,6 +683,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/25/c5/b0e154e6403c6790bb1e66acddf9787296a8196f5b14f4bb9e4c92b6734e/jupyter_packaging-0.12.3.tar.gz", hash = "sha256:9d9b2b63b97ffd67a8bc5391c32a421bc415b264a32c99e4d8d8dd31daae9cf4", size = 25350, upload-time = "2022-08-25T15:31:43.44Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/dd/cb/6c4c3e2219c2fe6fff6f9d4bda48da21951c3bd8f39b443a586f13173ea0/jupyter_packaging-0.12.3-py3-none-any.whl", hash = "sha256:c1a376b23bcaced6dfc9ab0e924b015ce11552a1a5bccf783c6476957c538348", size = 15663, upload-time = "2022-08-25T15:31:40.92Z" },
+]
+
+[[package]]
+name = "lark"
+version = "1.3.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/da/34/28fff3ab31ccff1fd4f6c7c7b0ceb2b6968d8ea4950663eadcb5720591a0/lark-1.3.1.tar.gz", hash = "sha256:b426a7a6d6d53189d318f2b6236ab5d6429eaf09259f1ca33eb716eed10d2905", size = 382732, upload-time = "2025-10-27T18:25:56.653Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/82/3d/14ce75ef66813643812f3093ab17e46d3a206942ce7376d31ec2d36229e7/lark-1.3.1-py3-none-any.whl", hash = "sha256:c629b661023a014c37da873b4ff58a817398d12635d3bbb2c5a03be7fe5d1e12", size = 113151, upload-time = "2025-10-27T18:25:54.882Z" },
 ]
 
 [[package]]
@@ -1375,6 +1433,24 @@ wheels = [
 ]
 
 [[package]]
+name = "py-build-cmake"
+version = "0.5.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "click", version = "8.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "distlib" },
+    { name = "lark" },
+    { name = "packaging" },
+    { name = "pyproject-metadata" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/2b/55/21e9ecb1546d6145dc37f9901d8e98e2c90da47b7882282c2eacd0f580e7/py_build_cmake-0.5.0.tar.gz", hash = "sha256:85f04cc28a051adafb8100d36e50f1a6f122ea559f237106fdc036ecaa44963b", size = 74946, upload-time = "2025-08-14T21:50:16.865Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/21/29/8b9dfdb2ce82e068c04c9013d307c1bdd85c4f77c82715d70411ef4ae37d/py_build_cmake-0.5.0-py3-none-any.whl", hash = "sha256:8132c443bcec2431ce72247e5e6d651bb29313a9696b456e558c8d584fff6517", size = 97082, upload-time = "2025-08-14T21:50:15.637Z" },
+]
+
+[[package]]
 name = "py-generator-build-backend"
 version = "1.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1453,14 +1529,14 @@ wheels = [
 
 [[package]]
 name = "pyproject-metadata"
-version = "0.11.0"
+version = "0.9.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "packaging" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/83/fa/8bf4fa41adfebd95dce360afe3f5fca243a17932089d3d5486e95ca44c57/pyproject_metadata-0.11.0.tar.gz", hash = "sha256:c72fa49418bb7c5a10f25e050c418009898d1c051721d19f98a6fb6da59a66cf", size = 43799, upload-time = "2026-02-09T19:12:50.578Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/64/ae/5fa065b049e97f96880de0611dbba513f0ee313b6edd0a64664c7b46a8e8/pyproject_metadata-0.9.1.tar.gz", hash = "sha256:b8b2253dd1b7062b78cf949a115f02ba7fa4114aabe63fa10528e9e1a954a816", size = 38415, upload-time = "2025-03-10T22:15:11.313Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1d/0b/da4851b1e2d9c40c9bd74c0abd94510a7d797da9ccde0a90e8953751ed4a/pyproject_metadata-0.11.0-py3-none-any.whl", hash = "sha256:85bbecca8694e2c00f63b492c96921d6c228454057c88e7c352b2077fcaa4096", size = 22040, upload-time = "2026-02-09T19:12:49.184Z" },
+    { url = "https://files.pythonhosted.org/packages/7e/b1/8e63033b259e0a4e40dd1ec4a9fee17718016845048b43a36ec67d62e6fe/pyproject_metadata-0.9.1-py3-none-any.whl", hash = "sha256:ee5efde548c3ed9b75a354fc319d5afd25e9585fa918a34f62f904cc731973ad", size = 18829, upload-time = "2025-03-10T22:15:09.632Z" },
 ]
 
 [[package]]
@@ -1516,6 +1592,7 @@ dependencies = [
     { name = "poetry-core", version = "2.2.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "poetry-core", version = "2.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "poetry-dynamic-versioning" },
+    { name = "py-build-cmake" },
     { name = "py-generator-build-backend" },
     { name = "pybind11" },
     { name = "pycparser", version = "2.23", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
@@ -1590,6 +1667,7 @@ requires-dist = [
     { name = "plux" },
     { name = "poetry-core" },
     { name = "poetry-dynamic-versioning" },
+    { name = "py-build-cmake", specifier = ">=0.5.0" },
     { name = "py-generator-build-backend" },
     { name = "pybind11" },
     { name = "pycparser" },
