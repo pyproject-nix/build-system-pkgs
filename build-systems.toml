@@ -146,6 +146,9 @@ poetry-core = []
 [protobuf]
 setuptools = []
 
+[py-build-cmake]
+flit-core = []
+
 [py-generator-build-backend]
 hatchling = []
 
