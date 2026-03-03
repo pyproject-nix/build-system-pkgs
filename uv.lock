@@ -335,6 +335,48 @@ wheels = [
 ]
 
 [[package]]
+name = "extension-helpers"
+version = "1.2.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.10' and sys_platform != 'ios'",
+    "python_full_version < '3.10' and sys_platform == 'ios'",
+]
+dependencies = [
+    { name = "setuptools", marker = "python_full_version < '3.10'" },
+    { name = "tomli", marker = "python_full_version < '3.10'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7f/12/da64a4492f1330f09e7f42c3acd9e6395f74e840dc4a5c3fe1fa4db272b5/extension_helpers-1.2.0.tar.gz", hash = "sha256:e7d9c8f71804edd7ecd05b5d59a5b504f6e24867970abfc12771242eed76ebcc", size = 29877, upload-time = "2024-10-16T14:08:39.047Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b3/0e/22599eac9e50f4274e78e47cef7e760d7a1bb2f0d0fdfb0bb5b0d2da263a/extension_helpers-1.2.0-py3-none-any.whl", hash = "sha256:765fe99a4fd4dd925aecebfbe2b752b48464efe7b71afea8ecb605cbca7b48f1", size = 23956, upload-time = "2024-10-16T14:08:37.354Z" },
+]
+
+[[package]]
+name = "extension-helpers"
+version = "1.4.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.14' and sys_platform != 'ios'",
+    "python_full_version >= '3.14' and sys_platform == 'ios'",
+    "python_full_version == '3.13.*' and sys_platform != 'ios'",
+    "python_full_version == '3.13.*' and sys_platform == 'ios'",
+    "python_full_version == '3.12.*' and sys_platform != 'ios'",
+    "python_full_version == '3.12.*' and sys_platform == 'ios'",
+    "python_full_version == '3.11.*' and sys_platform != 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
+    "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform == 'ios'",
+]
+dependencies = [
+    { name = "setuptools", marker = "python_full_version >= '3.10'" },
+    { name = "tomli", marker = "python_full_version == '3.10.*'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/24/51/d03359b683ed288b34d713dea97d2aee87a9bd866af1652554d9f643b47d/extension_helpers-1.4.0.tar.gz", hash = "sha256:78d04185f196e3e0bc5fd8418ce298b014c46f7ac609f6a8c10bf70e8c978324", size = 32995, upload-time = "2025-06-09T12:27:51.993Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f8/fb/f9a88ccea5377736d5d1e53c8a6c70207178cdc1ebbf305a50a610cbb751/extension_helpers-1.4.0-py3-none-any.whl", hash = "sha256:27600eb1da0b079db451c78553b750c1b1d8a8b6d86b597a003728229ea1b852", size = 26322, upload-time = "2025-06-09T12:27:51.051Z" },
+]
+
+[[package]]
 name = "flit-core"
 version = "3.12.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1555,6 +1597,8 @@ dependencies = [
     { name = "dunamai" },
     { name = "editables" },
     { name = "exceptiongroup" },
+    { name = "extension-helpers", version = "1.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "extension-helpers", version = "1.4.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "flit-core" },
     { name = "flit-scm" },
     { name = "hatch-fancy-pypi-readme" },
@@ -1635,6 +1679,7 @@ requires-dist = [
     { name = "dunamai" },
     { name = "editables" },
     { name = "exceptiongroup" },
+    { name = "extension-helpers" },
     { name = "flit-core" },
     { name = "flit-scm" },
     { name = "hatch-fancy-pypi-readme" },
@@ -1667,7 +1712,7 @@ requires-dist = [
     { name = "plux" },
     { name = "poetry-core" },
     { name = "poetry-dynamic-versioning" },
-    { name = "py-build-cmake", specifier = ">=0.5.0" },
+    { name = "py-build-cmake" },
     { name = "py-generator-build-backend" },
     { name = "pybind11" },
     { name = "pycparser" },
