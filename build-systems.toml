@@ -13,10 +13,16 @@ setuptools = []
 [cffi]
 setuptools = []
 
+[click]
+flit-core = []
+
 [cython]
 setuptools = []
 
 [deprecation]
+setuptools = []
+
+[distlib]
 setuptools = []
 
 [distro]
@@ -31,6 +37,9 @@ flit-core = []
 [exceptiongroup]
 flit-core = []
 flit-scm = []
+
+[extension-helpers]
+setuptools = []
 
 [expandvars]
 hatchling = []
@@ -72,6 +81,9 @@ flit-core = []
 
 [jupyter-packaging]
 hatchling = []
+
+[lark]
+setuptools = []
 
 [libcst]
 setuptools = []
@@ -148,6 +160,10 @@ setuptools = []
 
 [py-build-cmake]
 flit-core = []
+distlib = []
+pyproject-metadata = []
+lark = []
+tomli = []
 
 [py-generator-build-backend]
 hatchling = []
