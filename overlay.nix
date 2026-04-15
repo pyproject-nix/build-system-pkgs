@@ -4,6 +4,7 @@
   lib,
 }:
 let
+  inherit (lib) optionalAttrs;
   inherit (pyproject-nix.build.lib.resolvers) resolveNonCyclic;
 
   workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
@@ -199,7 +200,8 @@ let
     in
     {
       # Use setup hook from nixpkgs (forces cython regen)
-      cython = prev.cython.overrideAttrs (old: {
+      # Use setup hook from nixpkgs (forces cython regen)
+      cython = prev.cython.overrideAttrs (old: optionalAttrs (pkgs.python3Packages.cython ? setupHook) {
         inherit (pkgs.python3Packages.cython) setupHook;
       });
 
