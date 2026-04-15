@@ -313,6 +313,7 @@ setuptools-rust = [
 setuptools-scm = [
     "setuptools",
     "tomli",
+    "vcs-versioning",
 ]
 toml = [
     "setuptools",
