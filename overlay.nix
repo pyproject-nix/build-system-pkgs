@@ -9,26 +9,26 @@ let
 
   workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
 
-  # Supplement build-system metadata
-  buildSystems = lib.importTOML ./build-systems.toml;
+  # # Supplement build-system metadata
+  # buildSystems = lib.importTOML ./build-systems.toml;
 
-  # Build-systems overlay
-  buildSystemOverrides =
-    final: prev:
-    lib.mapAttrs (
-      name: spec:
-      let
-        drv = prev.${name};
-        format = drv.passthru.format;
-      in
-        # Only add build system if we're building from source
-        if format == "pyproject" then
-          drv.overrideAttrs (old: {
-            nativeBuildInputs = old.nativeBuildInputs ++ final.resolveBuildSystem spec;
-          })
-        else
-          drv
-    ) buildSystems;
+  # # Build-systems overlay
+  # buildSystemOverrides =
+  #   final: prev:
+  #   lib.mapAttrs (
+  #     name: spec:
+  #     let
+  #       drv = prev.${name};
+  #       format = drv.passthru.format;
+  #     in
+  #       # Only add build system if we're building from source
+  #       if format == "pyproject" then
+  #         drv.overrideAttrs (old: {
+  #           nativeBuildInputs = old.nativeBuildInputs ++ final.resolveBuildSystem spec;
+  #         })
+  #       else
+  #         drv
+  #   ) buildSystems;
 
   # Various fixups to only apply when building from source
   sdistFixups =
@@ -314,7 +314,6 @@ in
 { sourcePreference }:
 lib.composeManyExtensions [
   (workspace.mkPyprojectOverlay { inherit sourcePreference; })
-  buildSystemOverrides
   sdistFixups
   overrides
   memoiseBuildSystems
