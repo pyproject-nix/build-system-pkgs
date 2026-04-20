@@ -31,7 +31,9 @@
 
     in
     {
-      overlays = import ./default.nix { inherit uv2nix pyproject-nix lib; };
+      overlays = builtins.removeAttrs (import ./default.nix { inherit uv2nix pyproject-nix lib; }) [
+        "overlays"
+      ];
 
       checks = forAllSystems (
         system:
