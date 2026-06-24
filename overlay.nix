@@ -9,6 +9,14 @@ let
 
   workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
 
+  # Only keep overrides for packages that are actually present in the set.
+  #
+  # uv doesn't lock build-systems, so the set of packages we resolve depends on
+  # the lock and changes over time. Referencing `prev.${name}` for a package
+  # that isn't in the lock creates a broken attribute that errors when forced,
+  # so drop any override whose package doesn't exist instead.
+  onlyExisting = prev: lib.filterAttrs (name: _: prev ? ${name});
+
   # # Supplement build-system metadata
   # buildSystems = lib.importTOML ./build-systems.toml;
 
@@ -48,7 +56,7 @@ let
           overriden
         else
           drv
-    ) {
+    ) (onlyExisting prev {
 
       pydantic-core = prev.pydantic-core.overrideAttrs(old: {
         inherit (pkgs.python3Packages.pydantic-core) name pname src version cargoDeps;
@@ -172,7 +180,7 @@ let
           numpy = [ ];
         };
       }) { };
-    };
+    });
 
   # Create a resolveBuildSystem function in the same way as pyproject.nix with fallback behaviour.
   # Uses the dependency names of this project as the memoisation names.
@@ -198,7 +206,7 @@ let
     let
       pkgs = final.callPackage ({ pkgs }: pkgs) { };
     in
-    {
+    onlyExisting prev {
       # Use setup hook from nixpkgs (forces cython regen)
       # Use setup hook from nixpkgs (forces cython regen)
       cython = prev.cython.overrideAttrs (old: optionalAttrs (pkgs.python3Packages.cython ? setupHook) {
