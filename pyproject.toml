@@ -75,6 +75,7 @@ dependencies = [
   "uv-dynamic-versioning",
   "py-build-cmake",
   "extension-helpers",
+  "nanobind>=2.13.0",
 ]
 
 [tool.uv]
@@ -198,6 +199,9 @@ meson-python = [
     "ninja",
     "pyproject-metadata",
     "tomli",
+]
+nanobind = [
+  "scikit-build-core"
 ]
 ninja = [
     "scikit-build",
