@@ -9,8 +9,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
     "python_full_version < '3.10' and sys_platform != 'ios'",
     "python_full_version < '3.10' and sys_platform == 'ios'",
@@ -57,8 +57,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 dependencies = [
@@ -192,8 +192,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 dependencies = [
@@ -330,8 +330,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c7/0e/7fa0ef50764b67090eca4114772a2abf8b6148198475e54c660b97caeee6/click-8.5.0.tar.gz", hash = "sha256:ba0d2089de75ea0310e2dde03160e6ca10009947fb95a182f9b54021bb272e34", size = 382235, upload-time = "2026-08-26T13:33:14.56Z" }
@@ -521,8 +521,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 dependencies = [
@@ -644,8 +644,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 dependencies = [
@@ -804,8 +804,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 dependencies = [
@@ -878,6 +878,19 @@ wheels = [
 ]
 
 [[package]]
+name = "hatch-docstring-description"
+version = "1.1.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "hatchling", version = "1.27.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "hatchling", version = "1.32.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5a/a6/d2cd9d4bd9d58540825b5eb5eafaf0ede14bc3a66cc406501bbadd442e0c/hatch_docstring_description-1.1.1.tar.gz", hash = "sha256:b15d93c273ba3736abc9e2c542bb42a728a6740703ff5ed85cc072ed49458ae3", size = 18447, upload-time = "2025-04-15T10:00:43.318Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/85/24/7dd2ede7d6980932ac652aa6156a09b90776d0efb3d76cb720ba592d6e28/hatch_docstring_description-1.1.1-py3-none-any.whl", hash = "sha256:35aea8903161b8758cda903b2aa797ecaa403137cd5439f0b0b64348e002bb29", size = 16284, upload-time = "2025-04-15T10:00:41.686Z" },
+]
+
+[[package]]
 name = "hatch-fancy-pypi-readme"
 version = "25.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -919,8 +932,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 dependencies = [
@@ -1019,8 +1032,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 dependencies = [
@@ -1064,8 +1077,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 dependencies = [
@@ -1101,8 +1114,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/06/fe/b9f481cf0cc867958a21338baa900357b7b7d86cac9b025948049d77923c/installer-1.0.1.tar.gz", hash = "sha256:052c7fc3721d54c696e2dea019be67539d7b144e924f559f54beb3121831c364", size = 481132, upload-time = "2026-05-11T18:13:28.158Z" }
@@ -1269,8 +1282,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 dependencies = [
@@ -1443,8 +1456,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/48/91/d58a3eb45ed54bf32b96806dd2f4efd407f7a9675953e15e8ef257840a0d/meson-1.12.0.tar.gz", hash = "sha256:88afe0c20e52030218924ac37d0c81c59b4b5f3ae3752c8c6d7470c7d365886c", size = 2518280, upload-time = "2026-08-10T22:10:27.439Z" }
@@ -1501,8 +1514,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c7/1f/e28fae715401e8f57400e72aeaff4fde12046d31828164f34f61f0816da8/nanobind-3.1.0.tar.gz", hash = "sha256:6661e3dc1434d78781ccf7913442d90361dab395c3424efadb63bbb6ddea7ea3", size = 1145390, upload-time = "2026-09-18T15:59:42.726Z" }
@@ -1899,8 +1912,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ae/15/4500e320e6b101ec3b719ae85b697d9940b6cda672bc555bd6016fc60c6f/pip-26.2.1.tar.gz", hash = "sha256:f6ad667e89a1fe78046c8f13232b247200f5258d7828f3f7883d660878e0813f", size = 1848877, upload-time = "2026-08-04T22:51:14.148Z" }
@@ -1942,8 +1955,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f8/13/f870dd0b42690138e4e37a76b5138e5690ed4365a77071bb092d59037da0/platformdirs-4.11.11.tar.gz", hash = "sha256:b0befe8a90759e4a9a8b9820d434ae226a6549063210b596da0038a7a05aede4", size = 39949, upload-time = "2026-09-19T01:18:47.259Z" }
@@ -1985,8 +1998,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c1/11/55fae32807e1227a4f72e9460ee10818c800beb0b856460cb11164b6e1a3/plux-1.16.0.tar.gz", hash = "sha256:226ed9dbb52f0ed64ee1969d541544e2e67af6da010b7ecebcf145c20e92245a", size = 114744, upload-time = "2026-03-31T14:18:18.33Z" }
@@ -2019,8 +2032,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/b5/50f1fda26c4fe5b1d6ce5cdf0391bdfa1ca12fdcb8ad68344d5cf678fc90/poetry_core-2.5.0.tar.gz", hash = "sha256:81d04c9253b19d0604718268d781867c8f7b2128e5b25bbf1e84141eec6b89c4", size = 455721, upload-time = "2026-09-19T17:47:10.23Z" }
@@ -2075,8 +2088,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d9/89/5b8517baa72f84a67b8a307ba953c91057af618bf40bf676f3c03551f8f0/protobuf-7.36.2.tar.gz", hash = "sha256:497d0463ff3316681da6c0b9e8d06cb465d61abce00b613ab42226175644d1bb", size = 512737, upload-time = "2026-09-17T20:07:59.326Z" }
@@ -2158,8 +2171,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1b/7d/92392ff7815c21062bea51aa7b87d45576f649f16458d78b7cf94b9ab2e6/pycparser-3.0.tar.gz", hash = "sha256:600f49d217304a5902ac3c37e1281c9fe94e4d0489de643a9504c5cdfdfc6b29", size = 103492, upload-time = "2026-01-21T14:26:51.89Z" }
@@ -2219,6 +2232,7 @@ dependencies = [
     { name = "extension-helpers", version = "1.5.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "flit-core" },
     { name = "flit-scm" },
+    { name = "hatch-docstring-description" },
     { name = "hatch-fancy-pypi-readme" },
     { name = "hatch-jupyter-builder", version = "0.9.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "hatch-jupyter-builder", version = "0.10.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
@@ -2310,6 +2324,7 @@ requires-dist = [
     { name = "extension-helpers" },
     { name = "flit-core" },
     { name = "flit-scm" },
+    { name = "hatch-docstring-description" },
     { name = "hatch-fancy-pypi-readme" },
     { name = "hatch-jupyter-builder" },
     { name = "hatch-nodejs-version" },
@@ -2556,8 +2571,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6d/44/f5da03a8ef95d369145c5bb53050e7877c9f3d312e128605fd9504829143/setuptools-84.0.0.tar.gz", hash = "sha256:f4695c21257f0d9b537ec2692c941d02ee143b7cc1276941349a546573b2ef73", size = 1168449, upload-time = "2026-08-08T18:27:58.365Z" }
@@ -2778,8 +2793,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 dependencies = [
@@ -2872,8 +2887,8 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'ios'",
     "python_full_version == '3.12.*' and sys_platform == 'ios'",
     "python_full_version == '3.11.*' and sys_platform != 'ios'",
-    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.11.*' and sys_platform == 'ios'",
+    "python_full_version == '3.10.*' and sys_platform != 'ios'",
     "python_full_version == '3.10.*' and sys_platform == 'ios'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b9/d8/eab98a517c14134c0b2eb4e2387bc5f457334293ec5d2dd3857ec2966802/zipp-4.1.0.tar.gz", hash = "sha256:4cb57381f544315db7688e976e922a2b18cdb513d21cc194eb42232ba2a3e602", size = 26214, upload-time = "2026-05-18T20:08:57.967Z" }
