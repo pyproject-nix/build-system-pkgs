@@ -18,6 +18,7 @@ dependencies = [
   "exceptiongroup",
   "flit-core",
   "flit-scm",
+  "hatch-docstring-description",
   "hatch-fancy-pypi-readme",
   "hatch-jupyter-builder",
   "hatch-nodejs-version",
@@ -137,6 +138,9 @@ grpcio = [
 ]
 grpcio-tools = [
     "setuptools",
+]
+hatch-docstring-description = [
+    "hatchling",
 ]
 hatch-fancy-pypi-readme = [
     "hatchling",
