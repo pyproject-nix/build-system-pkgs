@@ -318,11 +318,27 @@ let
 
     };
 
+  fixups = lib.composeManyExtensions [
+    sdistFixups
+    overrides
+    memoiseBuildSystems
+  ];
+
 in
 { sourcePreference }:
-lib.composeManyExtensions [
-  (workspace.mkPyprojectOverlay { inherit sourcePreference; })
-  sdistFixups
-  overrides
-  memoiseBuildSystems
-]
+let
+  overlay = lib.composeExtensions (workspace.mkPyprojectOverlay { inherit sourcePreference; }) fixups;
+
+  # When cross compiling the uv2nix overlay also overrides the build platform set (pythonPkgsBuildHost).
+  # This replaces any fixups applied to that set before, so apply them again on top.
+  crossOverlay = lib.composeExtensions overlay (
+    _final: prev: {
+      pythonPkgsBuildHost = prev.pythonPkgsBuildHost.overrideScope fixups;
+    }
+  );
+in
+final: prev:
+if prev.stdenv.buildPlatform != prev.stdenv.hostPlatform then
+  crossOverlay final prev
+else
+  overlay final prev
