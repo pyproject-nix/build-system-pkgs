@@ -236,9 +236,22 @@ let
         }
       ) { };
 
-      # Use setup hook from nixpkgs (sets up build)
+      # Pass mesonFlags to meson-python as setup-args.
+      # When cross compiling nixpkgs adds a cross file to mesonFlags.
+      #
+      # The setup hook from nixpkgs can't be used, it adds flags for pypa/build, not uv.
       meson-python = prev.meson-python.overrideAttrs (old: {
-        inherit (pkgs.python3Packages.meson-python) setupHooks;
+        setupHook = pkgs.writeText "meson-python-setup-hook.sh" ''
+          mesonPythonBuildFlagsHook() {
+            local flagsArray=()
+            concatTo flagsArray mesonFlags mesonFlagsArray
+            for f in "''${flagsArray[@]}"; do
+              appendToVar uvBuildFlags "-Csetup-args=$f"
+            done
+          }
+
+          postConfigureHooks+=(mesonPythonBuildFlagsHook)
+        '';
       });
 
       # Use setup hook from nixpkgs (pretends version)
