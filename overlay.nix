@@ -121,12 +121,15 @@ let
           # Dependency metadata from uv.lock
           inherit (prev.maturin) passthru;
 
+          buildInputs = [ pkgs.zstd ];
+
           nativeBuildInputs =
             [
               pkgs.rustPlatform.cargoSetupHook
               final.pyprojectHook
               pkgs.cargo
               pkgs.rustc
+              pkgs.pkg-config
             ]
             ++ final.resolveBuildSystem {
               setuptools = [ ];
